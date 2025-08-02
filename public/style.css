@@ -1,0 +1,104 @@
+/* Custom CSS for a minimalist theme */
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar for a more thematic look */
+#chat-window::-webkit-scrollbar {
+    width: 6px;
+}
+
+#chat-window::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#chat-window::-webkit-scrollbar-thumb {
+    background-color: #4b5563; /* gray-600 */
+    border-radius: 20px;
+}
+.dark #chat-window::-webkit-scrollbar-thumb {
+    background-color: #4b5563; /* gray-600 */
+}
+.light #chat-window::-webkit-scrollbar-thumb {
+    background-color: #d1d5db; /* gray-300 */
+}
+
+/* Typing indicator animation */
+.dot-pulse {
+    position: relative;
+    left: -9999px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #9ca3af; /* gray-400 */
+    color: #9ca3af;
+    box-shadow: 9999px 0 0 -5px;
+    animation: dotPulse 1.5s infinite linear;
+    animation-delay: .25s;
+}
+.dot-pulse::before, .dot-pulse::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #9ca3af;
+    color: #9ca3af;
+}
+.dot-pulse::before {
+    box-shadow: 9984px 0 0 -5px;
+    animation: dotPulseBefore 1.5s infinite linear;
+    animation-delay: 0s;
+}
+.dot-pulse::after {
+    box-shadow: 10014px 0 0 -5px;
+    animation: dotPulseAfter 1.5s infinite linear;
+    animation-delay: .5s;
+}
+
+@keyframes dotPulseBefore {
+    0% { box-shadow: 9984px 0 0 -5px; }
+    30% { box-shadow: 9984px 0 0 2px; }
+    60%, 100% { box-shadow: 9984px 0 0 -5px; }
+}
+@keyframes dotPulse {
+    0% { box-shadow: 9999px 0 0 -5px; }
+    30% { box-shadow: 9999px 0 0 2px; }
+    60%, 100% { box-shadow: 9999px 0 0 -5px; }
+}
+@keyframes dotPulseAfter {
+    0% { box-shadow: 10014px 0 0 -5px; }
+    30% { box-shadow: 10014px 0 0 2px; }
+    60%, 100% { box-shadow: 10014px 0 0 -5px; }
+}
+
+/* Animation for messages appearing */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.message-animate {
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Styles for Settings Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.modal-content {
+    animation: fadeIn 0.3s ease-out forwards;
+}

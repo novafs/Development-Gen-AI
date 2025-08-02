@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" class="dark"> <!-- Set default theme to dark -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with Zot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300 h-screen overflow-hidden flex items-center justify-center">
+
+    <div id="chatbot-container" class="w-full h-full sm:max-w-2xl sm:h-[95vh] sm:max-h-[800px] bg-gray-100 dark:bg-gray-800 flex flex-col sm:rounded-2xl sm:shadow-2xl">
+        
+        <!-- Header -->
+        <header class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
+            <div class="flex items-center">
+                 <img src="https://placehold.co/40x40/7c3aed/ffffff?text=G" alt="Bot Avatar" class="w-10 h-10 rounded-full">
+                <div class="ml-3">
+                    <h1 class="text-lg font-bold">Zot Assistant</h1>
+                    <p class="text-sm text-green-500">Online</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-2">
+                <button id="settings-button" class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
+                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                </button>
+                <!-- Theme Toggle Button Removed -->
+            </div>
+        </header>
+
+        <!-- Chat Window -->
+        <main id="chat-window" class="flex-1 p-6 space-y-4 overflow-y-auto">
+            <!-- Messages will be appended here -->
+        </main>
+
+        <!-- Typing Indicator -->
+        <div id="typing-indicator" class="p-6 hidden flex-shrink-0">
+            <div class="flex items-center space-x-3">
+                 <img src="https://placehold.co/32x32/7c3aed/ffffff?text=G" alt="Bot Avatar" class="w-8 h-8 rounded-full">
+                <div class="dot-pulse"></div>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <footer class="p-4 border-t border-gray-200 dark:border-gray-700 flex-shrink-0">
+            <div class="flex items-center bg-gray-200 dark:bg-gray-700 rounded-lg p-2">
+                <input type="text" id="user-input" placeholder="Ask Zot anything..." class="flex-1 bg-transparent text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 px-2 py-2 focus:outline-none">
+                
+                <!-- Action Buttons -->
+                <button id="mic-button" class="p-2 text-gray-500 dark:text-gray-400 hover:text-indigo-500 dark:hover:text-indigo-400 rounded-full">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+                </button>
+                <button id="image-upload-button" class="p-2 text-gray-500 dark:text-gray-400 hover:text-indigo-500 dark:hover:text-indigo-400 rounded-full">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                </button>
+                <button id="file-upload-button" class="p-2 text-gray-500 dark:text-gray-400 hover:text-indigo-500 dark:hover:text-indigo-400 rounded-full">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg>
+                </button>
+                
+                <!-- Hidden file inputs -->
+                <input type="file" id="image-input" class="hidden" accept="image/*">
+                <input type="file" id="file-input" class="hidden">
+
+                <button id="send-button" class="ml-2 bg-indigo-600 text-white font-bold px-4 py-2 rounded-lg hover:bg-indigo-500 transition-colors duration-300 disabled:bg-indigo-300 disabled:cursor-not-allowed">
+                    Send
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal-overlay hidden">
+        <div class="modal-content bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100">Bot Preferences</h2>
+                <button id="close-modal-button" class="text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <div>
+                <label for="persona-select" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Bot Persona</label>
+                <select id="persona-select" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="default">General Assistant</option>
+                    <option value="code">Code Assistant</option>
+                    <option value="design">Design Assistant</option>
+                    <option value="research">Research Assistant</option>
+                    <option value="creative">Creative Writer</option>
+                </select>
+            </div>
+
+            <div class="mt-6 flex justify-end">
+                <button id="save-settings-button" class="bg-indigo-600 text-white font-bold px-4 py-2 rounded-lg hover:bg-indigo-500 transition-colors duration-300">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
